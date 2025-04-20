@@ -5,6 +5,7 @@ import com.namle197.common.MobileTakeHomeDispatchers
 import com.namle197.database.dao.UserDao
 import com.namle197.database.entity.UserEntity
 import com.namle197.model.User
+import com.namle197.model.UserDetail
 import com.namle197.network.MobileTakeHomeDataSource
 import com.namle197.network.model.ResultWrapper
 import com.namle197.network.model.safeApiCall
@@ -19,18 +20,12 @@ class DefaultUserRepository @Inject constructor(
     private val userDao: UserDao,
     @Dispatcher(MobileTakeHomeDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : UserRepository {
-    /*private val _user: MutableStateFlow<List<User>> = MutableStateFlow(listOf())
-    override val users: StateFlow<List<User>> = _user*/
 
-    override suspend fun getUsersFromRemote(perPage: Int, since: Int): List<User> {
+    override suspend fun getUsersFromRemote(perPage: Int, since: Int): ResultWrapper<List<User>> {
         val resultWrapper = safeApiCall(ioDispatcher) {
             mobileTakeHomeDataSource.getUsersByPage(perPage, since)
         }
-        return if (resultWrapper is ResultWrapper.Success) {
-            resultWrapper.data
-        } else {
-            listOf()
-        }
+        return resultWrapper
     }
 
     override suspend fun getUsersFromLocal(): List<User> {
@@ -53,5 +48,16 @@ class DefaultUserRepository @Inject constructor(
                 htmlUrl = it.htmlUrl
             )
         })
+    }
+
+    override suspend fun getUserDetail(userName: String): UserDetail? {
+        val resultWrapper = safeApiCall(ioDispatcher) {
+            mobileTakeHomeDataSource.getUserDetail(userName)
+        }
+        return if (resultWrapper is ResultWrapper.Success) {
+            resultWrapper.data
+        } else {
+            null
+        }
     }
 }

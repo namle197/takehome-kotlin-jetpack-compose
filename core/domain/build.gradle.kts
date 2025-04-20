@@ -18,6 +18,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.common)
+    implementation(projects.core.network)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)

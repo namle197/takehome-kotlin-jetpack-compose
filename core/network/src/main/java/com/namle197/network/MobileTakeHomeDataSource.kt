@@ -17,9 +17,9 @@ interface MobileTakeHomeDataSource {
     /**
      * Method to request user detail by id
      *
-     * @param id user id
+     * @param loginUserName user login name
      *
      * @return user detail
      */
-    suspend fun getUserDetail(id: Int): UserDetail
+    suspend fun getUserDetail(loginUserName: String): UserDetail
 }

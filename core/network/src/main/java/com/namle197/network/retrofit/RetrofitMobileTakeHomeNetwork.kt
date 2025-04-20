@@ -36,9 +36,9 @@ internal class RetrofitMobileTakeHomeNetwork @Inject constructor(okhttpCallFacto
     /**
      * Method to request user detail by id
      *
-     * @param id user id
+     * @param loginUserName user login name
      *
      * @return user detail
      */
-    override suspend fun getUserDetail(id: Int): UserDetail = networkApi.getUserDetail(id)
+    override suspend fun getUserDetail(loginUserName: String): UserDetail = networkApi.getUserDetail(loginUserName)
 }

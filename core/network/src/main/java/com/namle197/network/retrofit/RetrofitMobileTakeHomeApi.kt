@@ -13,8 +13,8 @@ internal interface RetrofitMobileTakeHomeApi {
         @Query("since") since: Int
     ): List<User>
 
-    @GET(value = "users/{id}")
+    @GET(value = "users/{loginUserName}")
     suspend fun getUserDetail(
-        @Path("id") id: Int
+        @Path("loginUserName") loginUserName: String
     ): UserDetail
 }
