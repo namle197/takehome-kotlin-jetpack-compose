@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.namle197.home.navigation.navigateToHome
 import com.namle197.mobiletakehome.navigation.TopLevelDestination
+import com.namle197.userdetail.navigation.navigateToUserDetail
 
 @Composable
 fun rememberMobileTakeHomeAppState(

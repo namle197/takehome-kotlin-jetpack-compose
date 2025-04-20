@@ -13,7 +13,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeScreen(
-    onItemClick: (id: Int) -> Unit
+    onItemClick: (loginUserName: String, avatarUrl: String) -> Unit
 ) {
     composable(route = homeRoute) {
         HomeRoute(onItemClick = onItemClick)

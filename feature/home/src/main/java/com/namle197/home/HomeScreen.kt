@@ -33,7 +33,7 @@ import com.namle197.ui.UserItem
 @Composable
 internal fun HomeRoute(
     viewmodel: HomeScreenViewModel = hiltViewModel(),
-    onItemClick: (id: Int) -> Unit
+    onItemClick: (loginUserName: String, avatarUrl: String) -> Unit
 ) {
     val uiState = viewmodel.homeScreenUiState.collectAsState()
     HomeScreen(uiState = uiState, onItemClick = onItemClick)
@@ -43,7 +43,7 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     uiState: State<HomeScreenUiState>,
-    onItemClick: (id: Int) -> Unit
+    onItemClick: (loginUserName: String, avatarUrl: String) -> Unit
 ) {
     //val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
@@ -69,7 +69,9 @@ internal fun HomeScreen(
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -93,8 +95,10 @@ internal fun HomeScreen(
                             UserItem(
                                 name = user.login,
                                 profileUrl = user.htmlUrl,
+                                location = null,
                                 avatarUrl = user.avatarUrl,
-                                modifier = Modifier.padding(top = 8.dp)
+                                modifier = Modifier.padding(top = 8.dp),
+                                onClick = { onItemClick(user.login, user.avatarUrl) }
                             )
                         }
                     }
