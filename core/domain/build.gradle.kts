@@ -1,0 +1,26 @@
+plugins {
+    id("mobiletakehome.android.library")
+    id("mobiletakehome.android.hilt")
+}
+
+android {
+    namespace = "com.namle197.domain"
+
+    /*testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }*/
+}
+
+dependencies {
+    implementation(projects.core.data)
+    implementation(projects.core.model)
+    implementation(projects.core.common)
+    implementation(projects.core.network)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+}
