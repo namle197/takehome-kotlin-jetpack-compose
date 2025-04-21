@@ -57,5 +57,9 @@ gradlePlugin {
             id = "mobiletakehome.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
+        register("androidTest") {
+            id = "mobiletakehome.android.test"
+            implementationClass = "AndroidTestConventionPlugin"
+        }
     }
 }

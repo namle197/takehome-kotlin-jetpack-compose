@@ -168,6 +168,15 @@ internal fun UserDetailScreen(
                         }
                     }
                 }
+
+                is UserDetailUiState.Error -> {
+                    Text(
+                        API_ERROR,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.error,
+                        maxLines = 1
+                    )
+                }
             }
 
         }
