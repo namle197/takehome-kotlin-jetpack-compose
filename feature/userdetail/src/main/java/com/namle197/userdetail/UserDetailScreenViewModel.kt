@@ -5,12 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.namle197.domain.GetUserDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,12 +18,26 @@ internal class UserDetailScreenViewModel @Inject constructor(
 ): ViewModel() {
     private val loginUserName: String? = savedStateHandle.get<String>("loginUserName")
 
-    val userDetailUiState: StateFlow<UserDetailUiState> =
-        getUserDetailUseCase(loginUserName).map(UserDetailUiState::Success)
-            .flowOn(Dispatchers.IO)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = UserDetailUiState.Loading
-            )
+    private val _userDetailUiState = MutableStateFlow<UserDetailUiState>(UserDetailUiState.Loading)
+    val userDetailUiState: StateFlow<UserDetailUiState> = _userDetailUiState
+
+    init {
+        fetchUserDetail(userName = loginUserName)
+    }
+
+    private fun fetchUserDetail(userName: String?) {
+        _userDetailUiState.update { UserDetailUiState.Loading }
+        viewModelScope.launch {
+            try {
+                val userDetail = getUserDetailUseCase(userName)
+                if (userDetail != null) {
+                    _userDetailUiState.update { UserDetailUiState.Success(userDetail) }
+                } else {
+                    _userDetailUiState.update { UserDetailUiState.Error }
+                }
+            } catch (e: Exception) {
+                _userDetailUiState.update { UserDetailUiState.Error }
+            }
+        }
+    }
 }

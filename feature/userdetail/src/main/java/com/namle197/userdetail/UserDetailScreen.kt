@@ -25,9 +25,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -37,6 +39,14 @@ import com.namle197.common.stringconstant.StringConstants.API_ERROR
 import com.namle197.common.stringconstant.StringConstants.NO_INFORMATION
 import com.namle197.common.stringconstant.StringConstants.USER_DETAIL_BLOG_LABEL
 import com.namle197.common.stringconstant.StringConstants.USER_DETAIL_TOP_BAR_LABEL
+import com.namle197.testing.androidtesttag.AndroidTestTag.BLOG_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.COLUMN_CONTAINER_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.FOLLOWER_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.USER_ITEM_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.LOADER_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_BACK_BUTTON_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TEXT_TAG
 import com.namle197.ui.BadgeItem
 import com.namle197.ui.UserItem
 
@@ -47,7 +57,7 @@ internal fun UserDetailRoute(
     loginUserName: String?,
     avatarUrl: String?
 ) {
-    val uiState = viewModel.userDetailUiState.collectAsState()
+    val uiState by viewModel.userDetailUiState.collectAsState()
     UserDetailScreen(
         uiState = uiState,
         onBack = onBack,
@@ -59,7 +69,7 @@ internal fun UserDetailRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UserDetailScreen(
-    uiState: State<UserDetailUiState>,
+    uiState: UserDetailUiState,
     onBack: () -> Unit,
     loginUserName: String?,
     avatarUrl: String?
@@ -70,12 +80,14 @@ internal fun UserDetailScreen(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.testTag(TOP_APP_BAR_TAG),
                 title = {
                     Text(
                         USER_DETAIL_TOP_BAR_LABEL,
                         color = MaterialTheme.colorScheme.onBackground,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.testTag(TOP_APP_BAR_TEXT_TAG)
                     )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -86,7 +98,7 @@ internal fun UserDetailScreen(
                     IconButton(onClick = { onBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = TOP_APP_BAR_BACK_BUTTON_TAG
                         )
                     }
                 },
@@ -96,11 +108,12 @@ internal fun UserDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = paddingValues.calculateTopPadding(), horizontal = 20.dp),
+                .padding(vertical = paddingValues.calculateTopPadding(), horizontal = 20.dp)
+                .testTag(COLUMN_CONTAINER_TAG),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            when (val result = uiState.value) {
+            when (val result = uiState) {
                 UserDetailUiState.Loading -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -108,7 +121,7 @@ internal fun UserDetailScreen(
                         verticalArrangement = Arrangement.Center
                     ) {
                         CircularProgressIndicator(
-                            modifier = Modifier.width(64.dp),
+                            modifier = Modifier.width(64.dp).testTag(LOADER_TAG),
                             color = MaterialTheme.colorScheme.secondary,
                             trackColor = MaterialTheme.colorScheme.surfaceVariant,
                         )
@@ -125,10 +138,11 @@ internal fun UserDetailScreen(
                         profileUrl = null,
                         location = result.userDetail?.location ?: NO_INFORMATION,
                         avatarUrl = avatarUrl ?: "",
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(top = 8.dp).testTag(USER_ITEM_TAG)
                     ) { }
 
                     Row(
+                        modifier = Modifier.testTag(FOLLOWER_TAG),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -147,7 +161,7 @@ internal fun UserDetailScreen(
 
                     Row(
                         horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth().testTag(BLOG_TAG)
                     ) {
                         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
@@ -167,6 +181,15 @@ internal fun UserDetailScreen(
                             )
                         }
                     }
+                }
+
+                is UserDetailUiState.Error -> {
+                    Text(
+                        API_ERROR,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.error,
+                        maxLines = 1
+                    )
                 }
             }
 
