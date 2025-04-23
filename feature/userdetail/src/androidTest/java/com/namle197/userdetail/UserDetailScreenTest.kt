@@ -1,4 +1,4 @@
-package com.namle197.home
+package com.namle197.userdetail
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertCountEquals
@@ -7,30 +7,29 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_LAZY_COLUMN_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.BLOG_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.FOLLOWER_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.LOADER_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_BACK_BUTTON_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TEXT_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.USER_ITEM_TAG
-import com.namle197.testing.data.listUserTestData
+import com.namle197.testing.data.userDetailTestData
 import org.junit.Rule
 import org.junit.Test
 
-class HomeScreenTest {
+class UserDetailScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
     fun verify_showTopAppBar_withText_andBackIcon() {
         composeTestRule.setContent {
-            HomeScreen (
-                uiState = HomeScreenUiState.Loading,
-                loadMoreState = false,
-                uiEvent = "",
-                onItemClick = { _, _ -> },
-                onLoadMore = {},
-                clearUiEvent = {}
+            UserDetailScreen (
+                uiState = UserDetailUiState.Loading,
+                onBack = {},
+                loginUserName = userDetailTestData.login,
+                avatarUrl = userDetailTestData.avatarUrl
             )
         }
 
@@ -54,13 +53,11 @@ class HomeScreenTest {
     @Test
     fun verify_showLoading_whenUiStateIsLoading() {
         composeTestRule.setContent {
-            HomeScreen (
-                uiState = HomeScreenUiState.Loading,
-                loadMoreState = false,
-                uiEvent = "",
-                onItemClick = { _, _ -> },
-                onLoadMore = {},
-                clearUiEvent = {}
+            UserDetailScreen (
+                uiState = UserDetailUiState.Loading,
+                onBack = {},
+                loginUserName = userDetailTestData.login,
+                avatarUrl = userDetailTestData.avatarUrl
             )
         }
 
@@ -74,30 +71,30 @@ class HomeScreenTest {
     @Test
     fun verify_showUsers_whenUiStateIsSuccess() {
         composeTestRule.setContent {
-            HomeScreen (
-                uiState = HomeScreenUiState.Success(
-                    users = listUserTestData,
-                    page = listUserTestData.last().id
+            UserDetailScreen (
+                uiState = UserDetailUiState.Success(
+                    userDetail = userDetailTestData
                 ),
-                loadMoreState = false,
-                uiEvent = "",
-                onItemClick = { _, _ -> },
-                onLoadMore = {},
-                clearUiEvent = {}
+                onBack = {},
+                loginUserName = userDetailTestData.login,
+                avatarUrl = userDetailTestData.avatarUrl
             )
         }
-
-        composeTestRule
-            .onNodeWithTag(
-                HOME_SCREEN_LAZY_COLUMN_TAG
-            )
-            .assertIsDisplayed()
 
         composeTestRule
             .onAllNodesWithTag(
                 USER_ITEM_TAG
             )
-            .assertCountEquals(3)
+            .assertCountEquals(1)
+        composeTestRule
+            .onNodeWithTag(
+                FOLLOWER_TAG
+            )
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithTag(
+                BLOG_TAG
+            )
+            .assertIsDisplayed()
     }
 }
-

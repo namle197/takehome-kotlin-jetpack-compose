@@ -6,8 +6,6 @@ import com.namle197.testing.data.listUserTestData
 import com.namle197.testing.repository.MockUserRepository
 import com.namle197.testing.util.MainDispatcherRule
 import junit.framework.Assert.assertTrue
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -24,7 +22,7 @@ class HomeScreenViewModelTest {
     private val mockUserRepository = MockUserRepository()
     private lateinit var mockGetUsersUseCase: GetFirstTwentyUsersUseCase
     private lateinit var mockGetNextUsersUseCase: GetNextUsersUseCase
-    private lateinit var SUT: HomeScreenViewModel
+    private lateinit var SUT: HomeScreenViewModel // SUT - System Under Test
 
     @Before
     fun setup() {

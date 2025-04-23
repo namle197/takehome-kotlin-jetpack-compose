@@ -35,13 +35,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.namle197.common.stringconstant.StringConstants.HOME_SCREEN_TOP_BAR_LABEL
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_COLUMN_CONTAINER_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.COLUMN_CONTAINER_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_LAZY_COLUMN_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_LOADER_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_TOP_APP_BAR_BACK_BUTTON_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_TOP_APP_BAR_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_TOP_APP_BAR_TEXT_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.HOME_SCREEN_USER_ITEM_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.LOADER_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_BACK_BUTTON_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TEXT_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.USER_ITEM_TAG
 import com.namle197.ui.UserItem
 
 @Composable
@@ -88,11 +88,11 @@ internal fun HomeScreen(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.testTag(HOME_SCREEN_TOP_APP_BAR_TAG),
+                modifier = Modifier.testTag(TOP_APP_BAR_TAG),
                 title = {
                     Text(
                         HOME_SCREEN_TOP_BAR_LABEL,
-                        modifier = Modifier.testTag(HOME_SCREEN_TOP_APP_BAR_TEXT_TAG),
+                        modifier = Modifier.testTag(TOP_APP_BAR_TEXT_TAG),
                         color = MaterialTheme.colorScheme.onBackground,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -106,7 +106,7 @@ internal fun HomeScreen(
                     IconButton(onClick = { /* do something */ }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = HOME_SCREEN_TOP_APP_BAR_BACK_BUTTON_TAG
+                            contentDescription = TOP_APP_BAR_BACK_BUTTON_TAG
                         )
                     }
                 },
@@ -117,7 +117,7 @@ internal fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .testTag(HOME_SCREEN_COLUMN_CONTAINER_TAG)
+                .testTag(COLUMN_CONTAINER_TAG)
             ,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -125,7 +125,7 @@ internal fun HomeScreen(
             when (val result = uiState) {
                 HomeScreenUiState.Loading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.width(64.dp).testTag(HOME_SCREEN_LOADER_TAG),
+                        modifier = Modifier.width(64.dp).testTag(LOADER_TAG),
                         color = MaterialTheme.colorScheme.secondary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     )
@@ -149,7 +149,7 @@ internal fun HomeScreen(
                                 profileUrl = user.htmlUrl,
                                 location = null,
                                 avatarUrl = user.avatarUrl,
-                                modifier = Modifier.padding(top = 8.dp).testTag(HOME_SCREEN_USER_ITEM_TAG),
+                                modifier = Modifier.padding(top = 8.dp).testTag(USER_ITEM_TAG),
                                 onClick = { onItemClick(user.login, user.avatarUrl) }
                             )
                         }
