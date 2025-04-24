@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+// Get first twenty users use case - use in HomeViewModel
 class GetFirstTwentyUsersUseCase @Inject constructor(
     private val userRepository: UserRepository,
     @Dispatcher(MobileTakeHomeDispatchers.IO) private val ioDispatcher: CoroutineDispatcher

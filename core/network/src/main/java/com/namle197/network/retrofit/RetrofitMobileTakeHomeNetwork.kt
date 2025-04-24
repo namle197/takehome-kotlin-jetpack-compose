@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// Retrofit mobile take home network
 @Singleton
 internal class RetrofitMobileTakeHomeNetwork @Inject constructor(okhttpCallFactory: Call.Factory) :
     MobileTakeHomeDataSource {

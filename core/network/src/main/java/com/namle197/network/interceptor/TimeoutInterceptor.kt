@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit
 import okhttp3.Interceptor
 import okhttp3.Response
 
+// Timeout interceptor for retrofit
 internal class TimeoutInterceptor : Interceptor {
     private companion object {
         private const val DEFAULT_CONNECT_TIMEOUT_MS = 120000

@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// Retrofit mobile take home api
 internal interface RetrofitMobileTakeHomeApi {
     @GET(value = "users")
     suspend fun getUsers(

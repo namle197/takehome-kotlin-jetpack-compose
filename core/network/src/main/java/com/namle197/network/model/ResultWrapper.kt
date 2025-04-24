@@ -6,6 +6,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
 
+// Result wrapper for retrofit
 sealed class ResultWrapper<out ResponseType> {
     data class Success<out ResponseType>(val data: ResponseType) :
         ResultWrapper<ResponseType>()

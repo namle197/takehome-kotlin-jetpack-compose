@@ -10,10 +10,12 @@ import com.namle197.userdetail.UserDetailRoute
 
 const val userDetailRoute = "user_detail_route"
 
+// Extension function to navigate to the user detail screen
 fun NavController.navigateToUserDetail(loginUserName: String, avatarUrl: String, navOptions: NavOptions? = null) {
     this.navigate("$userDetailRoute?loginUserName=$loginUserName&avatarUrl=$avatarUrl", navOptions)
 }
 
+// Extension function to add the user detail screen to the navigation graph
 fun NavGraphBuilder.userDetailScreen(
     onBack: () -> Unit
 ) {

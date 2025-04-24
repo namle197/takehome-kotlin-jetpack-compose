@@ -1,5 +1,8 @@
 package com.namle197.common.converter
 
+/**
+ * An extension function to format follower count.
+ */
 fun Int.formatFollower(): String {
     return when {
         this > 1000000 -> {

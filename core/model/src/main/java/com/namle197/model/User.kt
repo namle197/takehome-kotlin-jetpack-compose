@@ -2,6 +2,7 @@ package com.namle197.model
 
 import com.google.gson.annotations.SerializedName
 
+// User model
 data class User(
     @SerializedName(value = "id")
     val id: Int, // id The user id

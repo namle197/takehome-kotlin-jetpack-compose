@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+// Data source module for retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 internal interface DataSourceModule {

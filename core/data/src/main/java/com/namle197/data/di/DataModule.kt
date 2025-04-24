@@ -8,6 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+// Dependency injection for data module
+
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {

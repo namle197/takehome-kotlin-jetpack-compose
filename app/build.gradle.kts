@@ -1,7 +1,11 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    //alias(libs.plugins.android.application)
+    //alias(libs.plugins.kotlin.android)
+    id("mobiletakehome.android.application") // Use this from build-logic instead of 2 above
+
+    // alias(libs.plugins.kotlin.compose)
+    id("mobiletakehome.android.application.compose") // Use this from build-logic instead of the one above
+
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     id("org.jlleitschuh.gradle.ktlint")

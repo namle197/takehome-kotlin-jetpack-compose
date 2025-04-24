@@ -5,6 +5,7 @@ import com.namle197.model.User
 import com.namle197.network.model.ResultWrapper
 import javax.inject.Inject
 
+// Get next users use case - use in HomeViewModel
 class GetNextUsersUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {

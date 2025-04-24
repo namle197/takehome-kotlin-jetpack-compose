@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+// Get user detail use case - use in DetailViewModel
 class GetUserDetailUseCase @Inject constructor(
     private val userRepository: UserRepository,
     @Dispatcher(MobileTakeHomeDispatchers.IO) private val ioDispatcher: CoroutineDispatcher
