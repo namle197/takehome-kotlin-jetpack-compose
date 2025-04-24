@@ -4,31 +4,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.BookmarkAdded
 import androidx.compose.material.icons.filled.Group
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,14 +29,12 @@ import com.namle197.common.stringconstant.StringConstants.API_ERROR
 import com.namle197.common.stringconstant.StringConstants.NO_INFORMATION
 import com.namle197.common.stringconstant.StringConstants.USER_DETAIL_BLOG_LABEL
 import com.namle197.common.stringconstant.StringConstants.USER_DETAIL_TOP_BAR_LABEL
+import com.namle197.designsystem.ui.ScreenScaffold
 import com.namle197.testing.androidtesttag.AndroidTestTag.BLOG_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.COLUMN_CONTAINER_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.FOLLOWER_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.USER_ITEM_TAG
 import com.namle197.testing.androidtesttag.AndroidTestTag.LOADER_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_BACK_BUTTON_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TAG
-import com.namle197.testing.androidtesttag.AndroidTestTag.TOP_APP_BAR_TEXT_TAG
+import com.namle197.testing.androidtesttag.AndroidTestTag.USER_ITEM_TAG
 import com.namle197.ui.BadgeItem
 import com.namle197.ui.UserItem
 
@@ -66,7 +54,6 @@ internal fun UserDetailRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UserDetailScreen(
     uiState: UserDetailUiState,
@@ -74,36 +61,9 @@ internal fun UserDetailScreen(
     loginUserName: String?,
     avatarUrl: String?
 ) {
-    Scaffold(
-        containerColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.onBackground,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier.testTag(TOP_APP_BAR_TAG),
-                title = {
-                    Text(
-                        USER_DETAIL_TOP_BAR_LABEL,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.testTag(TOP_APP_BAR_TEXT_TAG)
-                    )
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Transparent,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { onBack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = TOP_APP_BAR_BACK_BUTTON_TAG
-                        )
-                    }
-                },
-            )
-        }
+    ScreenScaffold(
+        topBarLabel = USER_DETAIL_TOP_BAR_LABEL,
+        onBackClick = { onBack() }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -192,7 +152,6 @@ internal fun UserDetailScreen(
                     )
                 }
             }
-
         }
     }
 }

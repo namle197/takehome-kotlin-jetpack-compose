@@ -1,5 +1,6 @@
 package com.namle197.network.di
 
+import com.namle197.network.interceptor.TimeoutInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,6 +10,7 @@ import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
+// Network module for retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
@@ -26,6 +28,7 @@ internal object NetworkModule {
         return OkHttpClient
             .Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(TimeoutInterceptor())
             .build()
     }
 

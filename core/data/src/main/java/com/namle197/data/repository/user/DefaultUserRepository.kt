@@ -21,6 +21,14 @@ class DefaultUserRepository @Inject constructor(
     @Dispatcher(MobileTakeHomeDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : UserRepository {
 
+    /**
+     * Get users data from remote
+     *
+     * @param perPage: Number of users per page
+     * @param since: Last user id
+     *
+     * @return ResultWrapper<List<User>>
+     */
     override suspend fun getUsersFromRemote(perPage: Int, since: Int): ResultWrapper<List<User>> {
         val resultWrapper = safeApiCall(ioDispatcher) {
             mobileTakeHomeDataSource.getUsersByPage(perPage, since)
@@ -28,6 +36,11 @@ class DefaultUserRepository @Inject constructor(
         return resultWrapper
     }
 
+    /**
+     * Get users data from local
+     *
+     * @return List<User>
+     */
     override suspend fun getUsersFromLocal(): List<User> {
         return userDao.getUserEntity().map {
             User(
@@ -39,6 +52,11 @@ class DefaultUserRepository @Inject constructor(
         }
     }
 
+    /**
+     * Save users to local database
+     *
+     * @param users: List<User>
+     */
     override suspend fun saveUsers(users: List<User>) {
         userDao.insertUserEntities(users.map {
             UserEntity(
@@ -50,6 +68,13 @@ class DefaultUserRepository @Inject constructor(
         })
     }
 
+    /**
+     * Get user detail
+     *
+     * @param userName: String
+     *
+     * @return UserDetail?
+     */
     override suspend fun getUserDetail(userName: String): UserDetail? {
         val resultWrapper = safeApiCall(ioDispatcher) {
             mobileTakeHomeDataSource.getUserDetail(userName)

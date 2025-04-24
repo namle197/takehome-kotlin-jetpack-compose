@@ -3,6 +3,7 @@ package com.namle197.network
 import com.namle197.model.User
 import com.namle197.model.UserDetail
 
+// Mobile take home data source
 interface MobileTakeHomeDataSource {
     /**
      * Method to request users by page (pagination)

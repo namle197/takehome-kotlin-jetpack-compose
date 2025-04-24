@@ -16,15 +16,19 @@ internal class UserDetailScreenViewModel @Inject constructor(
     private val getUserDetailUseCase: GetUserDetailUseCase,
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
+    // Extract loginUserName from savedStateHandle
     private val loginUserName: String? = savedStateHandle.get<String>("loginUserName")
 
+    // User detail states
     private val _userDetailUiState = MutableStateFlow<UserDetailUiState>(UserDetailUiState.Loading)
     val userDetailUiState: StateFlow<UserDetailUiState> = _userDetailUiState
 
     init {
+        // Fetch user detail when the ViewModel is initialized
         fetchUserDetail(userName = loginUserName)
     }
 
+    // Function to fetch user detail
     private fun fetchUserDetail(userName: String?) {
         _userDetailUiState.update { UserDetailUiState.Loading }
         viewModelScope.launch {

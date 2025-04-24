@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+// Dependency injection for database module
 @Module
 @InstallIn(SingletonComponent::class)
 class DaoModule {

@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.namle197.database.entity.UserEntity
 
+// Data Access Object for User
+
 @Dao
 interface UserDao {
     @Query(

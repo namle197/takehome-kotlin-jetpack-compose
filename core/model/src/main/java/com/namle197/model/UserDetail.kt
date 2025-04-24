@@ -2,6 +2,7 @@ package com.namle197.model
 
 import com.google.gson.annotations.SerializedName
 
+// User detail model
 data class UserDetail(
     @SerializedName(value = "login")
     val login: String, // login Login username

@@ -4,7 +4,7 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Dispatcher(val textToImageDispatchers: MobileTakeHomeDispatchers)
+annotation class Dispatcher(val mobileTakeHome: MobileTakeHomeDispatchers)
 
 enum class MobileTakeHomeDispatchers {
     Default,

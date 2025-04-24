@@ -2,6 +2,8 @@ package com.namle197.home
 
 import com.namle197.model.User
 
+// UI state for the home screen
+// Define 3 states: Loading, Success, Error
 internal sealed interface HomeScreenUiState {
     object Loading: HomeScreenUiState
     data class Success(

@@ -3,6 +3,7 @@ package com.namle197.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// Entity for User
 @Entity(tableName = "user")
 data class UserEntity(
     @PrimaryKey(autoGenerate = false)
