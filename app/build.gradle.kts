@@ -34,6 +34,26 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        create("staging") {
+            initWith(buildTypes.getByName("debug")) // dùng config từ debug
+            matchingFallbacks += listOf("debug")   // nếu thiếu resource, dùng debug
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+
+            // Turn of minify for QA
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
