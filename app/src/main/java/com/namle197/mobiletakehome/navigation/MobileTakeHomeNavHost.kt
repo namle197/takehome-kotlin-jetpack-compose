@@ -19,7 +19,7 @@ fun MobileTakeHomeNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = homeRoute,
 ) {
-    val navController = /*appState.navController*/ rememberNavController()
+    val navController = appState.navController
     val context  = LocalContext.current
 
     NavHost(
