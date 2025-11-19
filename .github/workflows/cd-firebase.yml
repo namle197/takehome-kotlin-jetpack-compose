@@ -1,27 +1,41 @@
-name: CD Firebase
+name: CD Firebase Staging
 
 on:
-  push:
-    branches: [ "dev" ]
+  pull_request:
+    types: [closed]
+    branches: [dev]
 
 jobs:
-  deploy:
+  deploy-staging:
+    if: github.event.pull_request.merged == true  # Only PR merged
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout code
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      # 2️⃣ Setup Java
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
+      # 3️⃣ Setup Android SDK
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
+      # 4️⃣ Grant permission cho gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 5️⃣ Build staging APK
       - name: Build Staging APK
-        run: ./gradlew assembleStaging
+        run: ./gradlew assembleStaging --stacktrace
 
-      - name: Upload to Firebase App Distribution
+      # 6️⃣ Upload to Firebase App Distribution
+      - name: Upload to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }}
